@@ -111,6 +111,12 @@ python3 backend/websocket_server.py --camera 0
 
 Open the Vite URL shown in the frontend terminal (normally <http://localhost:5173>). The WebSocket endpoint defaults to `ws://127.0.0.1:8765`. To use another endpoint, set `VITE_GESTURE_WS_URL` in `frontend/.env.local` and restart Vite; do not commit local `.env` files.
 
+## GitHub Pages deployment
+
+The GitHub Actions workflow builds and deploys the frontend to GitHub Pages whenever changes are pushed to `main`. In the repository's **Settings → Pages**, set the build and deployment source to **GitHub Actions**. The site is available at <https://dasparthiv27.github.io/3D-Hand-Gesture-Control/> after the deployment workflow completes.
+
+GitHub Pages hosts only the static frontend. Hand tracking requires the separate Python WebSocket service to be running and reachable by the browser.
+
 ## Controls
 
 ### Mouse and touch
