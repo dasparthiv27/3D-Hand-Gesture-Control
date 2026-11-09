@@ -1,0 +1,5 @@
+# One OpenCV distribution only; MediaPipe's task API was verified with these imports.
+mediapipe==0.10.35
+opencv-contrib-python==5.0.0.93
+pytest==9.1.1
+websockets==17.3

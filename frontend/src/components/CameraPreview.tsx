@@ -1,0 +1,12 @@
+import {useEffect,useRef} from 'react';
+import {Camera, CircleAlert, Hand} from 'lucide-react';
+import type {GestureMessage} from '../types/gesture';
+
+const CONNECTIONS=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+
+export default function CameraPreview({message,enabled,connected,error}:{message:GestureMessage|null;enabled:boolean;connected:boolean;error:string}){
+ const canvas=useRef<HTMLCanvasElement>(null);
+ useEffect(()=>{const c=canvas.current;if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;ctx.clearRect(0,0,c.width,c.height);if(!message?.landmarks?.length)return;for(const hand of message.landmarks){ctx.strokeStyle='#78eff6';ctx.lineWidth=1.8;ctx.lineCap='round';for(const [a,b] of CONNECTIONS){ctx.beginPath();ctx.moveTo(hand[a][0]*c.width,hand[a][1]*c.height);ctx.lineTo(hand[b][0]*c.width,hand[b][1]*c.height);ctx.stroke()}ctx.fillStyle='#f4c2ff';for(const [x,y] of hand){ctx.beginPath();ctx.arc(x*c.width,y*c.height,2.5,0,Math.PI*2);ctx.fill()}}},[message?.landmarks]);
+ const status=error?'Camera unavailable':!enabled?'Camera off':!connected?'Waiting for service':message?.tracking==='tracking'?`${message.hands} ${message.hands===1?'hand':'hands'} detected`:'No hands detected';
+ return <section className="camera-preview panel" aria-label="Live camera preview"><div className="camera-preview-head"><div><div className="eyebrow"><Camera size={11}/> LIVE CAMERA</div><strong>{status}</strong></div><span className={`camera-status-dot ${message?.tracking==='tracking'?'tracking':error?'error':''}`}/></div><div className="camera-frame">{message?.frame?<img src={message.frame} alt="Live camera feed"/>:<div className="camera-placeholder">{error?<CircleAlert size={22}/>:enabled?<Camera size={22}/>:<Hand size={22}/>}<span>{error||(!enabled?'Enable hand controls to start the camera':message&&!message.frame?'Restart the gesture service to enable preview':'Waiting for camera frames…')}</span></div>}<canvas ref={canvas} width={320} height={240}/><div className="camera-badge">{message?.gesture==='neutral'?'NEUTRAL':message?.gesture?.replace('_',' ').toUpperCase()||'STANDBY'}</div></div><div className="camera-detail"><span>LANDMARKS <b>{message?.landmarks?.reduce((sum,hand)=>sum+hand.length,0)??0}</b></span><span>PINCH <b>{message?.pinch?.toUpperCase()??'IDLE'}</b></span></div></section>
+}

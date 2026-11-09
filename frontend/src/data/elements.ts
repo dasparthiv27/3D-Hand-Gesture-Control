@@ -1,0 +1,9 @@
+// Common-element abridged standard atomic weights are rounded from IUPAC's published periodic table; configs are neutral ground-state configurations.
+export type ElementInfo={name:string;symbol:string;mass:number;config:string};
+export const elements:ElementInfo[]=[
+['Hydrogen','H',1.008,'1s¹'],['Helium','He',4.003,'1s²'],['Lithium','Li',6.94,'[He] 2s¹'],['Beryllium','Be',9.012,'[He] 2s²'],['Boron','B',10.81,'[He] 2s² 2p¹'],['Carbon','C',12.011,'[He] 2s² 2p²'],['Nitrogen','N',14.007,'[He] 2s² 2p³'],['Oxygen','O',15.999,'[He] 2s² 2p⁴'],['Fluorine','F',18.998,'[He] 2s² 2p⁵'],['Neon','Ne',20.18,'[He] 2s² 2p⁶'],['Sodium','Na',22.99,'[Ne] 3s¹'],['Magnesium','Mg',24.305,'[Ne] 3s²'],['Aluminium','Al',26.982,'[Ne] 3s² 3p¹'],['Silicon','Si',28.085,'[Ne] 3s² 3p²'],['Phosphorus','P',30.974,'[Ne] 3s² 3p³'],['Sulfur','S',32.06,'[Ne] 3s² 3p⁴'],['Chlorine','Cl',35.45,'[Ne] 3s² 3p⁵'],['Argon','Ar',39.948,'[Ne] 3s² 3p⁶'],['Potassium','K',39.098,'[Ar] 4s¹'],['Calcium','Ca',40.078,'[Ar] 4s²']
+].map(([name,symbol,mass,config])=>({name:String(name),symbol:String(symbol),mass:Number(mass),config:String(config)}));
+export const bySymbol=(symbol:string)=>elements.find(e=>e.symbol===symbol)??elements[5];
+const subshells:[string,number][]=[['1s',2],['2s',2],['2p',6],['3s',2],['3p',6],['4s',2],['3d',10],['4p',6]];
+const superscript:Record<string,string>={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+export function configurationFor(electrons:number){let remaining=Math.max(0,Math.min(36,Math.floor(electrons)));const config:string[]=[];for(const[name,capacity]of subshells){if(!remaining)break;const filled=Math.min(remaining,capacity);config.push(`${name}${String(filled).split('').map(d=>superscript[d]).join('')}`);remaining-=filled}return config.join(' ')||'No electrons'}

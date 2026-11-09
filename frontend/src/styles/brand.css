@@ -1,0 +1,113 @@
+:root {
+  --cyan: #6de8f7;
+  --electric-blue: #579eff;
+  --line: rgba(165, 196, 255, 0.15);
+}
+
+.app-shell {
+  background:
+    radial-gradient(ellipse at 42% 46%, rgba(26, 48, 84, 0.58), transparent 49%),
+    linear-gradient(135deg, #080d19 0%, #0a1120 52%, #070b15 100%);
+}
+
+.topbar {
+  border-bottom-color: rgba(147, 186, 247, 0.12);
+  background: linear-gradient(180deg, rgba(7, 12, 24, 0.94), rgba(7, 12, 24, 0.58));
+  backdrop-filter: blur(16px);
+}
+
+.brand b {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+}
+
+.brand small {
+  letter-spacing: 0.1em;
+}
+
+.scene-caption .scene-tagline {
+  max-width: 430px;
+  color: #d3e2f6;
+  font-size: clamp(12px, 1.15vw, 15px);
+  line-height: 1.55;
+}
+
+.scene-caption .scene-description {
+  margin-top: 7px;
+  color: #8293ad;
+  font-size: 11px;
+}
+
+.panel {
+  border-color: rgba(156, 190, 245, 0.17);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3), inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.library {
+  border-color: rgba(109, 232, 247, 0.19);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.add-model,
+.animation-toggle,
+.panel-actions button,
+.error-box button,
+.scene-item,
+.remove-model,
+.icon-button {
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.add-model:hover:not(:disabled),
+.animation-toggle:hover,
+.panel-actions button:hover,
+.scene-item:hover {
+  border-color: rgba(109, 232, 247, 0.62);
+  background-color: rgba(49, 126, 158, 0.2);
+}
+
+.camera-frame {
+  border-color: rgba(109, 232, 247, 0.2);
+  box-shadow: inset 0 0 24px rgba(17, 107, 151, 0.08);
+}
+
+.sensitivity input,
+.particle-row input[type='range'] {
+  accent-color: var(--electric-blue);
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .scene-caption .scene-tagline {
+    max-width: 320px;
+    font-size: 11px;
+  }
+
+  .scene-caption .scene-description {
+    max-width: 300px;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
